@@ -1,0 +1,212 @@
+Using TensorFlow backend.
+2019-02-27 14:41:37.697766: I tensorflow/core/common_runtime/gpu/gpu_device.cc:982] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-02-27 14:41:37.697829: I tensorflow/core/common_runtime/gpu/gpu_device.cc:988]      0 
+2019-02-27 14:41:37.697848: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1001] 0:   N 
+2019-02-27 14:41:37.698171: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 7266 MB memory) -> physical GPU (device: 0, name: Quadro M4000, pci bus id: 0000:00:05.0, compute capability: 5.2)
+2019-02-27 14:41:37.707424: I tensorflow/core/common_runtime/process_util.cc:69] Creating new thread pool with default inter op setting: 2. Tune using inter_op_parallelism_threads for best performance.
+2019-02-27 14:41:38.889208: E tensorflow/core/framework/op_segment.cc:54] Create kernel failed: Not found: No registered 'NGraphVariable' OpKernel for GPU devices compatible with node {{node lstm_1/kernel}} = NGraphVariable[_class=["loc:@IsVariableInitialized"], container="", dtype=DT_FLOAT, just_looking=false, shape=[1,200], shared_name="", _device="/job:localhost/replica:0/task:0/device:GPU:0"]()
+	.  Registered:  device='CPU'
+
+2019-02-27 14:41:38.889300: E tensorflow/core/common_runtime/executor.cc:623] Executor failed to create kernel. Not found: No registered 'NGraphVariable' OpKernel for GPU devices compatible with node {{node lstm_1/kernel}} = NGraphVariable[_class=["loc:@IsVariableInitialized"], container="", dtype=DT_FLOAT, just_looking=false, shape=[1,200], shared_name="", _device="/job:localhost/replica:0/task:0/device:GPU:0"]()
+	.  Registered:  device='CPU'
+
+	 [[{{node lstm_1/kernel}} = NGraphVariable[_class=["loc:@IsVariableInitialized"], container="", dtype=DT_FLOAT, just_looking=false, shape=[1,200], shared_name="", _device="/job:localhost/replica:0/task:0/device:GPU:0"]()]]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/client/session.py", line 1334, in _do_call
+    return fn(*args)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/client/session.py", line 1319, in _run_fn
+    options, feed_dict, fetch_list, target_list, run_metadata)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/client/session.py", line 1407, in _call_tf_sessionrun
+    run_metadata)
+tensorflow.python.framework.errors_impl.NotFoundError: No registered 'NGraphVariable' OpKernel for GPU devices compatible with node {{node lstm_1/kernel}} = NGraphVariable[_class=["loc:@IsVariableInitialized"], container="", dtype=DT_FLOAT, just_looking=false, shape=[1,200], shared_name="", _device="/job:localhost/replica:0/task:0/device:GPU:0"]()
+	.  Registered:  device='CPU'
+
+	 [[{{node lstm_1/kernel}} = NGraphVariable[_class=["loc:@IsVariableInitialized"], container="", dtype=DT_FLOAT, just_looking=false, shape=[1,200], shared_name="", _device="/job:localhost/replica:0/task:0/device:GPU:0"]()]]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/paperspace/Desktop/RNN_datasets/rnn.py", line 69, in <module>
+    regressor.fit(X_train, y_train, epochs = 100, batch_size = 32)
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/engine/training.py", line 1039, in fit
+    validation_steps=validation_steps)
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/engine/training_arrays.py", line 199, in fit_loop
+    outs = f(ins_batch)
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py", line 2697, in __call__
+    if hasattr(get_session(), '_make_callable_from_options'):
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py", line 199, in get_session
+    [tf.is_variable_initialized(v) for v in candidate_vars])
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/client/session.py", line 929, in run
+    run_metadata_ptr)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/client/session.py", line 1152, in _run
+    feed_dict_tensor, options, run_metadata)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/client/session.py", line 1328, in _do_run
+    run_metadata)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/client/session.py", line 1348, in _do_call
+    raise type(e)(node_def, op, message)
+tensorflow.python.framework.errors_impl.NotFoundError: No registered 'NGraphVariable' OpKernel for GPU devices compatible with node node lstm_1/kernel (defined at /home/paperspace/.local/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py:402)  = NGraphVariable[_class=["loc:@IsVariableInitialized"], container="", dtype=DT_FLOAT, just_looking=false, shape=[1,200], shared_name="", _device="/job:localhost/replica:0/task:0/device:GPU:0"]()
+	.  Registered:  device='CPU'
+
+	 [[node lstm_1/kernel (defined at /home/paperspace/.local/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py:402)  = NGraphVariable[_class=["loc:@IsVariableInitialized"], container="", dtype=DT_FLOAT, just_looking=false, shape=[1,200], shared_name="", _device="/job:localhost/replica:0/task:0/device:GPU:0"]()]]
+
+Caused by op 'lstm_1/kernel', defined at:
+  File "/home/paperspace/Desktop/RNN_datasets/rnn.py", line 47, in <module>
+    regressor.add(LSTM(units = 50, return_sequences = True, input_shape = (X_train.shape[1], 1)))
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/engine/sequential.py", line 165, in add
+    layer(x)
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/layers/recurrent.py", line 532, in __call__
+    return super(RNN, self).__call__(inputs, **kwargs)
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/engine/base_layer.py", line 431, in __call__
+    self.build(unpack_singleton(input_shapes))
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/layers/recurrent.py", line 493, in build
+    self.cell.build(step_input_shape)
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/layers/recurrent.py", line 1868, in build
+    constraint=self.kernel_constraint)
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/legacy/interfaces.py", line 91, in wrapper
+    return func(*args, **kwargs)
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/engine/base_layer.py", line 252, in add_weight
+    constraint=constraint)
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py", line 402, in variable
+    v = tf.Variable(value, dtype=tf.as_dtype(dtype), name=name)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/ops/variables.py", line 145, in __call__
+    return cls._variable_call(*args, **kwargs)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/ops/variables.py", line 141, in _variable_call
+    aggregation=aggregation)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/ops/variables.py", line 120, in <lambda>
+    previous_getter = lambda **kwargs: default_variable_creator(None, **kwargs)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/ops/variable_scope.py", line 2441, in default_variable_creator
+    expected_shape=expected_shape, import_scope=import_scope)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/ops/variables.py", line 147, in __call__
+    return super(VariableMetaclass, cls).__call__(*args, **kwargs)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/ops/variables.py", line 1104, in __init__
+    constraint=constraint)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/ops/variables.py", line 1240, in _init_from_args
+    name=name)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/ops/state_ops.py", line 77, in variable_op_v2
+    shared_name=shared_name)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/ops/gen_state_ops.py", line 1357, in variable_v2
+    shared_name=shared_name, name=name)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/op_def_library.py", line 787, in _apply_op_helper
+    op_def=op_def)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/util/deprecation.py", line 488, in new_func
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/ops.py", line 3274, in create_op
+    op_def=op_def)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/ops.py", line 1770, in __init__
+    self._traceback = tf_stack.extract_stack()
+
+NotFoundError (see above for traceback): No registered 'NGraphVariable' OpKernel for GPU devices compatible with node node lstm_1/kernel (defined at /home/paperspace/.local/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py:402)  = NGraphVariable[_class=["loc:@IsVariableInitialized"], container="", dtype=DT_FLOAT, just_looking=false, shape=[1,200], shared_name="", _device="/job:localhost/replica:0/task:0/device:GPU:0"]()
+	.  Registered:  device='CPU'
+
+	 [[node lstm_1/kernel (defined at /home/paperspace/.local/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py:402)  = NGraphVariable[_class=["loc:@IsVariableInitialized"], container="", dtype=DT_FLOAT, just_looking=false, shape=[1,200], shared_name="", _device="/job:localhost/replica:0/task:0/device:GPU:0"]()]]
+
+[Finished in 4.993s]
+Epoch 1/100
+2019-02-27 14:41:41.472204: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:964] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2019-02-27 14:41:41.472573: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1432] Found device 0 with properties: 
+name: Quadro M4000 major: 5 minor: 2 memoryClockRate(GHz): 0.7725
+pciBusID: 0000:00:05.0
+totalMemory: 7.94GiB freeMemory: 7.53GiB
+2019-02-27 14:41:41.472604: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1511] Adding visible gpu devices: 0
+2019-02-27 14:41:41.874227: I tensorflow/core/common_runtime/gpu/gpu_device.cc:982] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-02-27 14:41:41.874289: I tensorflow/core/common_runtime/gpu/gpu_device.cc:988]      0 
+2019-02-27 14:41:41.874299: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1001] 0:   N 
+2019-02-27 14:41:41.874526: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 7266 MB memory) -> physical GPU (device: 0, name: Quadro M4000, pci bus id: 0000:00:05.0, compute capability: 5.2)
+2019-02-27 14:41:41.875622: I tensorflow/core/common_runtime/process_util.cc:69] Creating new thread pool with default inter op setting: 2. Tune using inter_op_parallelism_threads for best performance.
+2019-02-27 14:41:42.496133: E tensorflow/core/framework/op_segment.cc:54] Create kernel failed: Not found: No registered 'NGraphVariable' OpKernel for GPU devices compatible with node {{node lstm_1/kernel}} = NGraphVariable[_class=["loc:@IsVariableInitialized"], container="", dtype=DT_FLOAT, just_looking=false, shape=[1,200], shared_name="", _device="/job:localhost/replica:0/task:0/device:GPU:0"]()
+	.  Registered:  device='CPU'
+
+2019-02-27 14:41:42.496208: E tensorflow/core/common_runtime/executor.cc:623] Executor failed to create kernel. Not found: No registered 'NGraphVariable' OpKernel for GPU devices compatible with node {{node lstm_1/kernel}} = NGraphVariable[_class=["loc:@IsVariableInitialized"], container="", dtype=DT_FLOAT, just_looking=false, shape=[1,200], shared_name="", _device="/job:localhost/replica:0/task:0/device:GPU:0"]()
+	.  Registered:  device='CPU'
+
+	 [[{{node lstm_1/kernel}} = NGraphVariable[_class=["loc:@IsVariableInitialized"], container="", dtype=DT_FLOAT, just_looking=false, shape=[1,200], shared_name="", _device="/job:localhost/replica:0/task:0/device:GPU:0"]()]]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/client/session.py", line 1334, in _do_call
+    return fn(*args)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/client/session.py", line 1319, in _run_fn
+    options, feed_dict, fetch_list, target_list, run_metadata)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/client/session.py", line 1407, in _call_tf_sessionrun
+    run_metadata)
+tensorflow.python.framework.errors_impl.NotFoundError: No registered 'NGraphVariable' OpKernel for GPU devices compatible with node {{node lstm_1/kernel}} = NGraphVariable[_class=["loc:@IsVariableInitialized"], container="", dtype=DT_FLOAT, just_looking=false, shape=[1,200], shared_name="", _device="/job:localhost/replica:0/task:0/device:GPU:0"]()
+	.  Registered:  device='CPU'
+
+	 [[{{node lstm_1/kernel}} = NGraphVariable[_class=["loc:@IsVariableInitialized"], container="", dtype=DT_FLOAT, just_looking=false, shape=[1,200], shared_name="", _device="/job:localhost/replica:0/task:0/device:GPU:0"]()]]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/paperspace/Desktop/RNN_datasets/rnn.py", line 69, in <module>
+    regressor.fit(X_train, y_train, epochs = 100, batch_size = 32)
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/engine/training.py", line 1039, in fit
+    validation_steps=validation_steps)
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/engine/training_arrays.py", line 199, in fit_loop
+    outs = f(ins_batch)
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py", line 2697, in __call__
+    if hasattr(get_session(), '_make_callable_from_options'):
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py", line 199, in get_session
+    [tf.is_variable_initialized(v) for v in candidate_vars])
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/client/session.py", line 929, in run
+    run_metadata_ptr)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/client/session.py", line 1152, in _run
+    feed_dict_tensor, options, run_metadata)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/client/session.py", line 1328, in _do_run
+    run_metadata)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/client/session.py", line 1348, in _do_call
+    raise type(e)(node_def, op, message)
+tensorflow.python.framework.errors_impl.NotFoundError: No registered 'NGraphVariable' OpKernel for GPU devices compatible with node node lstm_1/kernel (defined at /home/paperspace/.local/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py:402)  = NGraphVariable[_class=["loc:@IsVariableInitialized"], container="", dtype=DT_FLOAT, just_looking=false, shape=[1,200], shared_name="", _device="/job:localhost/replica:0/task:0/device:GPU:0"]()
+	.  Registered:  device='CPU'
+
+	 [[node lstm_1/kernel (defined at /home/paperspace/.local/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py:402)  = NGraphVariable[_class=["loc:@IsVariableInitialized"], container="", dtype=DT_FLOAT, just_looking=false, shape=[1,200], shared_name="", _device="/job:localhost/replica:0/task:0/device:GPU:0"]()]]
+
+Caused by op 'lstm_1/kernel', defined at:
+  File "/home/paperspace/Desktop/RNN_datasets/rnn.py", line 47, in <module>
+    regressor.add(LSTM(units = 50, return_sequences = True, input_shape = (X_train.shape[1], 1)))
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/engine/sequential.py", line 165, in add
+    layer(x)
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/layers/recurrent.py", line 532, in __call__
+    return super(RNN, self).__call__(inputs, **kwargs)
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/engine/base_layer.py", line 431, in __call__
+    self.build(unpack_singleton(input_shapes))
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/layers/recurrent.py", line 493, in build
+    self.cell.build(step_input_shape)
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/layers/recurrent.py", line 1868, in build
+    constraint=self.kernel_constraint)
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/legacy/interfaces.py", line 91, in wrapper
+    return func(*args, **kwargs)
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/engine/base_layer.py", line 252, in add_weight
+    constraint=constraint)
+  File "/home/paperspace/.local/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py", line 402, in variable
+    v = tf.Variable(value, dtype=tf.as_dtype(dtype), name=name)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/ops/variables.py", line 145, in __call__
+    return cls._variable_call(*args, **kwargs)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/ops/variables.py", line 141, in _variable_call
+    aggregation=aggregation)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/ops/variables.py", line 120, in <lambda>
+    previous_getter = lambda **kwargs: default_variable_creator(None, **kwargs)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/ops/variable_scope.py", line 2441, in default_variable_creator
+    expected_shape=expected_shape, import_scope=import_scope)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/ops/variables.py", line 147, in __call__
+    return super(VariableMetaclass, cls).__call__(*args, **kwargs)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/ops/variables.py", line 1104, in __init__
+    constraint=constraint)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/ops/variables.py", line 1240, in _init_from_args
+    name=name)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/ops/state_ops.py", line 77, in variable_op_v2
+    shared_name=shared_name)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/ops/gen_state_ops.py", line 1357, in variable_v2
+    shared_name=shared_name, name=name)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/op_def_library.py", line 787, in _apply_op_helper
+    op_def=op_def)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/util/deprecation.py", line 488, in new_func
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/ops.py", line 3274, in create_op
+    op_def=op_def)
+  File "/usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/ops.py", line 1770, in __init__
+    self._traceback = tf_stack.extract_stack()
+
+NotFoundError (see above for traceback): No registered 'NGraphVariable' OpKernel for GPU devices compatible with node node lstm_1/kernel (defined at /home/paperspace/.local/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py:402)  = NGraphVariable[_class=["loc:@IsVariableInitialized"], container="", dtype=DT_FLOAT, just_looking=false, shape=[1,200], shared_name="", _device="/job:localhost/replica:0/task:0/device:GPU:0"]()
+	.  Registered:  device='CPU'
+
+	 [[node lstm_1/kernel (defined at /home/paperspace/.local/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py:402)  = NGraphVariable[_class=["loc:@IsVariableInitialized"], container="", dtype=DT_FLOAT, just_looking=false, shape=[1,200], shared_name="", _device="/job:localhost/replica:0/task:0/device:GPU:0"]()]]
+
+[Finished in 8.076s]
